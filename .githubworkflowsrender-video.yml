@@ -1,0 +1,20 @@
+name: Render video
+on:
+  workflow_dispatch: # This creates the "Run workflow" button
+
+jobs:
+  render:
+    name: Render video
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          node-version: '20'
+      - run: npm install
+      # Change "MyVideo" to whatever your Composition ID is in src/Root.tsx
+      - run: npx remotion render MyVideo out/video.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: out.mp4
+          path: out/video.mp4
